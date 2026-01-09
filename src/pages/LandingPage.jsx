@@ -39,7 +39,7 @@ const LandingPage = () => {
                         Your Health, In Control
                     </h1>
                     <p className="hero-subtitle">
-                        Manage your medications, track appointments, and communicate with your doctor—all in one simple, secure platform.
+                        Manage your medications, track appointments, and communicate with your doctor all in one simple, secure platform.
                     </p>
                     <div className="hero-actions">
                         <button className="btn-hero-primary" onClick={() => navigate('/signup')}>
