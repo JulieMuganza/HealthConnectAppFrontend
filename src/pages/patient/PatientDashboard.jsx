@@ -87,8 +87,14 @@ const PatientDashboard = () => {
                                 <span style={{ fontSize: '2rem', fontWeight: 700 }}>{activeMeds.length}</span>
                                 <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>prescribed</span>
                             </div>
-                            <div style={{ height: '8px', width: '100%', background: '#F1F5F9', borderRadius: '4px', marginTop: '16px' }}>
-                                <div style={{ height: '100%', width: '100%', background: 'var(--secondary-color)', borderRadius: '4px' }}></div>
+
+                            <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                {activeMeds.length > 0 ? activeMeds.map(med => (
+                                    <div key={med.id} style={{ fontSize: '0.85rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--secondary-color)' }}></div>
+                                        {med.name} <span style={{ color: 'var(--text-secondary)' }}>({med.dosage})</span>
+                                    </div>
+                                )) : <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>No active medications</span>}
                             </div>
                             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '12px' }}>All taken for today.</p>
                         </Card>
@@ -157,7 +163,7 @@ const PatientDashboard = () => {
                         </div>
                     </Card>
                 </div>
-            </div>
+            </div >
 
             <style>{`
                 .dashboard-grid {
@@ -193,7 +199,7 @@ const PatientDashboard = () => {
                     }
                 }
             `}</style>
-        </DashboardLayout>
+        </DashboardLayout >
     );
 };
 

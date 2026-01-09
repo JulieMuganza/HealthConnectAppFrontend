@@ -30,7 +30,7 @@ const Sidebar = ({ role = 'patient', isOpen, onToggle }) => {
             }
         };
         fetchCount();
-        const interval = setInterval(fetchCount, 30000); // Poll every 30s
+        const interval = setInterval(fetchCount, 5000); // Poll every 5s for better responsiveness
         return () => clearInterval(interval);
     }, []);
 

@@ -5,6 +5,7 @@ import SignupPage from './pages/auth/SignupPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import PatientDashboard from './pages/patient/PatientDashboard';
+import LandingPage from './pages/LandingPage';
 import DoctorDashboard from './pages/doctor/DoctorDashboard';
 import PatientList from './pages/doctor/PatientList';
 import PatientAppointments from './pages/patient/PatientAppointments';
@@ -20,7 +21,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
