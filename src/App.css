@@ -1,0 +1,5 @@
+/* Main App Layout Styles will can go here or in specific layout components */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

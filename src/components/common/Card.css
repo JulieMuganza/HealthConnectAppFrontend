@@ -1,0 +1,22 @@
+.card-base {
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    background: var(--bg-card);
+    border: 1px solid white;
+    /* Subtle highlight */
+    box-shadow: var(--shadow-sm);
+}
+
+/* Optional hover effect if we want cards to feel interactive */
+/* .card-base:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+} */
+
+.p-6 {
+    padding: 24px;
+}
+
+.p-0 {
+    padding: 0;
+}

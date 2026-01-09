@@ -1,0 +1,64 @@
+.appointment-widget {
+    display: flex;
+    flex-direction: column;
+}
+
+.apt-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 12px;
+}
+
+.apt-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.apt-time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    padding: 12px 16px;
+    border-radius: 16px;
+    min-width: 80px;
+}
+
+.apt-date {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.apt-time {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.apt-details h4 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.apt-doctor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    border-radius: 20px;
+}
+
+.apt-doctor-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.apt-doctor-info span {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}

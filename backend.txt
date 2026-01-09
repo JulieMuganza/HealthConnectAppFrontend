@@ -1,0 +1,351 @@
+# Backend Blueprint: Doctor-Patient Messaging App
+
+This document defines the backend architecture, API endpoints, and database schema strictly derived from the existing frontend implementation.
+
+---
+
+## 1. Frontend → Backend Mapping
+
+| Frontend Page / Component | Action / Data Needs | API Endpoint | Method |
+| :--- | :--- | :--- | :--- |
+| **Login Page** | Authenticate user | `/api/auth/login` | POST |
+| **Global (App Init)** | Get current user session | `/api/auth/me` | GET |
+| **Doctor Dashboard** | Get stats, schedule, requests | `/api/dashboard/doctor` | GET |
+|  | Accept/Decline Request | `/api/appointments/:id/status` | PATCH |
+| **Patient Dashboard** | Get health overview, activity | `/api/dashboard/patient` | GET |
+| **Doctor Inbox** | Get conversation list | `/api/conversations` | GET |
+|  | Get chat messages | `/api/conversations/:id/messages` | GET |
+|  | Send message | `/api/conversations/:id/messages` | POST |
+| **Patient Messages** | (Same as Doctor Inbox) | (Same endpoints) | |
+| **Patient List** | Get all patients | `/api/doctor/patients` | GET |
+| **Patient Case Modal** | Get patient details (history, meds) | `/api/doctor/patients/:id/case` | GET |
+| **Doctor Profile** | Get profile data | `/api/profiles/doctor` | GET |
+|  | Update profile | `/api/profiles/doctor` | PUT |
+| **Patient Profile** | Get profile data | `/api/profiles/patient` | GET |
+|  | Update profile | `/api/profiles/patient` | PUT |
+
+---
+
+## 2. Authentication APIs
+
+### Register (Patient / Doctor)
+*   **Endpoint:** `/api/auth/register`
+*   **Method:** `POST`
+*   **Body:**
+    ```json
+    {
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "password": "securePass123",
+      "role": "PATIENT", // or "DOCTOR"
+      // Helper fields for initial profile creation can be added here
+      "specialty": "Cardiology" // Optional, if role is DOCTOR
+    }
+    ```
+*   **Response:** `{ "token": "jwt_string", "user": { "id": 1, "name": "Jane Doe", "role": "PATIENT" } }`
+
+### Login
+*   **Endpoint:** `/api/auth/login`
+*   **Method:** `POST`
+*   **Body:**
+    ```json
+    {
+      "email": "jane@example.com",
+      "password": "securePass123"
+    }
+    ```
+*   **Response:** `{ "token": "jwt_string", "user": { ... } }`
+
+### Get Current User
+*   **Endpoint:** `/api/auth/me`
+*   **Method:** `GET`
+*   **Headers:** `Authorization: Bearer <token>`
+*   **Response:** `{ "id": 1, "name": "Jane Doe", "role": "PATIENT", "avatar": "url..." }`
+
+---
+
+## 3. User & Profile APIs
+
+### Get Doctor Profile
+*   **Endpoint:** `/api/profiles/doctor`
+*   **Method:** `GET`
+*   **Response:** (Matches `DoctorProfile.jsx`)
+    ```json
+    {
+      "personal": { "name": "Dr. McCoy", "email": "mccoy@clinic.com" },
+      "professional": {
+        "specialty": "Cardiologist",
+        "licenseNumber": "MD-12345",
+        "experienceYears": 15
+      },
+      "clinic": {
+        "name": "HealthConnect Medical Center",
+        "address": "123 Wellness Blvd"
+      }
+    }
+    ```
+
+### Get Patient Profile
+*   **Endpoint:** `/api/profiles/patient`
+*   **Method:** `GET`
+*   **Response:** (Matches `PatientProfile.jsx`)
+    ```json
+    {
+      "personal": { "name": "Julie Taylor", "email": "julie@example.com", "phone": "555-0123", "dob": "1990-01-01" },
+      "medical": {
+        "emergencyContact": "John Doe (Husband) - 555-9999",
+        "medicalHistory": ["Hypertension", "Type 2 Diabetes"],
+        "allergies": ["Penicillin"],
+        "conditions": ["Asthma"]
+      }
+    }
+    ```
+
+---
+
+## 4. Messaging APIs
+
+### Fetch Conversations
+*   **Endpoint:** `/api/conversations`
+*   **Method:** `GET`
+*   **Response:** List of chats for the sidebar.
+    ```json
+    [
+      {
+        "id": 1,
+        "participant": { "id": 2, "name": "Julie Taylor", "role": "PATIENT", "avatar": "..." },
+        "lastMessage": "Can we reschedule?",
+        "time": "14:30",
+        "unreadCount": 2
+      }
+    ]
+    ```
+
+### Fetch Messages
+*   **Endpoint:** `/api/conversations/:id/messages`
+*   **Method:** `GET`
+*   **Response:** Full chat history.
+    ```json
+    [
+      { "id": 101, "senderId": 2, "text": "Hi Dr. McCoy", "time": "14:28", "isRead": true },
+      { "id": 102, "senderId": 1, "text": "Hello Julie", "time": "14:29", "isRead": true }
+    ]
+    ```
+
+### Send Message
+*   **Endpoint:** `/api/conversations/:id/messages`
+*   **Method:** `POST`
+*   **Body:** `{ "text": "Yes, next Tuesday works." }`
+*   **Response:** Created message object.
+
+---
+
+## 5. Dashboard APIs
+
+### Doctor Dashboard Stats & Data
+*   **Endpoint:** `/api/dashboard/doctor`
+*   **Method:** `GET`
+*   **Response:**
+    ```json
+    {
+      "stats": { "totalPatients": 124, "appointmentsToday": 8, "pendingRequests": 3 },
+      "schedule": [
+        { "id": 5, "time": "09:00", "patientName": "Sarah Connor", "type": "Check-up", "status": "Confirmed" }
+      ],
+      "requests": [
+        { "id": 9, "patientName": "John Smith", "status": "Pending" }
+      ]
+    }
+    ```
+
+### Patient Dashboard Data
+*   **Endpoint:** `/api/dashboard/patient`
+*   **Method:** `GET`
+*   **Response:**
+    ```json
+    {
+      "greeting": "Good morning",
+      "nextAppointment": { "date": "Tomorrow, 10:00 AM", "doctor": "Dr. McCoy" },
+      "activeMedications": 2,
+      "recentVitals": { "bp": "120/80", "heartRate": 72 },
+      "recentActivity": [
+        { "id": 1, "text": "Lab results available", "time": "2 hours ago" }
+      ]
+    }
+    ```
+
+### Get Patient Case (For Modal)
+*   **Endpoint:** `/api/doctor/patients/:id/case`
+*   **Method:** `GET`
+*   **Response:**
+    ```json
+    {
+      "overview": { "age": 34, "gender": "Female", "bloodType": "O+" },
+      "medicalHistory": ["Asthma", "Seasonal Allergies"],
+      "medications": [
+        { "name": "Albuterol", "dosage": "90mcg", "frequency": "As needed" }
+      ],
+      "vitals": [
+        { "date": "2023-10-01", "systolic": 120, "diastolic": 80, "heartRate": 72 }
+      ]
+    }
+    ```
+
+---
+
+## 6. Prisma + PostgreSQL Database Design
+
+### Schema (`schema.prisma`)
+
+```prisma
+// 1. Users & Auth
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(PATIENT)
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  doctorProfile    DoctorProfile?
+  patientProfile   PatientProfile?
+  sentMessages     Message[]
+  conversations    ConversationParticipant[]
+  appointmentsAsDoctor Appointment[] @relation("DoctorAppointments")
+  appointmentsAsPatient Appointment[] @relation("PatientAppointments")
+}
+
+enum Role {
+  DOCTOR
+  PATIENT
+  ADMIN
+}
+
+// 2. Profiles
+model DoctorProfile {
+  id              Int     @id @default(autoincrement())
+  userId          Int     @unique
+  user            User    @relation(fields: [userId], references: [id])
+  specialty       String
+  licenseNumber   String?
+  experienceYears Int?
+  clinicName      String?
+  clinicAddress   String?
+  bio             String?
+}
+
+model PatientProfile {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @unique
+  user             User     @relation(fields: [userId], references: [id])
+  phone            String?
+  dob              DateTime?
+  emergencyContact String?
+  bloodType        String?
+  height           Float?   // cm
+  weight           Float?   // kg
+  
+  // JSON fields for simple lists (Frontend just asks for a list)
+  medicalHistory   String[] // Array of strings (PostgreSQL specific) or JSON
+  allergies        String[]
+  chronicConditions String[]
+
+  medications      Medication[]
+  vitals           Vital[]
+}
+
+// 3. Medical Records (Supports Patient Case Modal)
+model Medication {
+  id               Int            @id @default(autoincrement())
+  patientProfileId Int
+  patientProfile   PatientProfile @relation(fields: [patientProfileId], references: [id])
+  name             String
+  dosage           String
+  frequency        String
+  isActive         Boolean        @default(true)
+}
+
+model Vital {
+  id               Int            @id @default(autoincrement())
+  patientProfileId Int
+  patientProfile   PatientProfile @relation(fields: [patientProfileId], references: [id])
+  recordedAt       DateTime       @default(now())
+  systolic         Int
+  diastolic        Int
+  heartRate        Int
+  temperature      Float?
+}
+
+// 4. Appointments (Supports Dashboards)
+model Appointment {
+  id        Int      @id @default(autoincrement())
+  doctorId  Int
+  patientId Int
+  doctor    User     @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  patient   User     @relation("PatientAppointments", fields: [patientId], references: [id])
+  date      DateTime
+  type      String   // "Consultation", "Follow-up"
+  status    ApptStatus @default(PENDING)
+  notes     String?
+}
+
+enum ApptStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+// 5. Messaging
+model Conversation {
+  id           Int       @id @default(autoincrement())
+  updatedAt    DateTime  @updatedAt
+  participants ConversationParticipant[]
+  messages     Message[]
+}
+
+model ConversationParticipant {
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id])
+  
+  @@id([conversationId, userId])
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  conversationId Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  senderId       Int
+  sender         User         @relation(fields: [senderId], references: [id])
+  text           String
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+}
+```
+
+---
+
+## 7. API + Prisma Alignment
+
+| API Endpoint | Prisma Query Logic (High Level) |
+| :--- | :--- |
+| **GET /dashboard/doctor** | 1. `count` on Patients. <br> 2. `findMany` on Appointments (`where: { doctorId: me, date: today }`). <br> 3. `findMany` on Appointments (`where: { doctorId: me, status: 'PENDING' }`). |
+| **GET /conversations** | `findMany` on Conversation (filtered by participant me), include `messages` (take: 1, orderBy: desc), include `participants` (to get other user's name/avatar). |
+| **GET /messages/:id** | `findMany` on Message (`where: { conversationId: id }`, `orderBy: createdAt asc`). |
+| **GET /patient/:id/case** | `findUnique` on PatientProfile, include `medications`, `vitals`. |
+
+---
+
+## 8. Backend Conventions
+
+*   **Error Handling**: Return JSON `{ "error": "Message" }` with appropriate status codes (400, 401, 404, 500).
+*   **Security**:
+    *   Passwords hashed with `bcrypt`.
+    *   All protected routes require `Authorization: Bearer <token>` header.
+    *   Validate `req.user.id` against resource ownership (Doctor can view their patients; Patient can view only their own profile).
+*   **Pagination**: Implement for Messages (infinite scroll) and Patient List using `take` and `skip` in Prisma.

@@ -1,0 +1,103 @@
+.medication-widget {
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.widget-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.medication-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.med-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid #F0F4F8;
+    transition: transform 0.2s ease;
+}
+
+.med-item:hover {
+    transform: translateX(4px);
+    border-color: var(--primary-light);
+}
+
+.med-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    /* Squircle */
+    background: var(--primary-light);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.med-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.med-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.med-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.med-details {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.med-progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.med-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: #EDF2F7;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.med-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 3px;
+}
+
+.med-progress-text {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    min-width: 60px;
+    text-align: right;
+}

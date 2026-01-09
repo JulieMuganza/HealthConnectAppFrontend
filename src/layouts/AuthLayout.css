@@ -1,0 +1,94 @@
+.auth-layout {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-app);
+    overflow: hidden;
+}
+
+.mesh-gradient-1 {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(0, 102, 255, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    filter: blur(60px);
+    z-index: 0;
+    animation: float 10s ease-in-out infinite;
+}
+
+.mesh-gradient-2 {
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(56, 178, 172, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    filter: blur(60px);
+    z-index: 0;
+    animation: float 12s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, 40px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.auth-content {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+}
+
+.brand-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.auth-card {
+    width: 100%;
+    padding: 40px !important;
+    /* Override default card padding for more spacious auth */
+}
+
+.auth-card-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.auth-card-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.auth-card-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.auth-footer {
+    margin-top: 16px;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}

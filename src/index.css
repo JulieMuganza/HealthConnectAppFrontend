@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Brand Colors - Soft/Blue Gradient Theme */
+  --primary-color: #3B82F6;
+  /* Bright Sky Blue */
+  --primary-hover: #2563EB;
+  --primary-light: #E0F2FE;
+
+  --secondary-color: #14B8A6;
+  /* Soft Teal */
+
+  /* Functional Colors */
+  --success-color: #22C55E;
+  --warning-color: #F59E0B;
+  --error-color: #EF4444;
+  --info-color: #3B82F6;
+
+  /* Neutrals */
+  --bg-app: #f0f4f8;
+  /* Very soft blue-gray base */
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+  /* Pure White Sidebar */
+
+  --text-main: #1E293B;
+  /* Slate 800 */
+  --text-secondary: #64748B;
+  /* Slate 500 */
+  --text-light: #94A3B8;
+  /* Slate 400 */
+  --border-color: #F1F5F9;
+
+  /* Shadows - Soft/Diffuse */
+  --shadow-sm: 0 4px 6px -1px rgba(148, 163, 184, 0.1);
+  --shadow-md: 0 10px 15px -3px rgba(148, 163, 184, 0.1), 0 4px 6px -2px rgba(148, 163, 184, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(148, 163, 184, 0.1), 0 10px 10px -5px rgba(148, 163, 184, 0.04);
+
+  /* Border Radius - Modern/Round */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  /* Remove default outline */
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-app);
+  background-image: linear-gradient(135deg, #EFF6FF 0%, #F0F9FF 100%);
+  /* Soft blue bloom */
+  min-height: 100vh;
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilities */
+.glass-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  /* Removed blur for cleaner professional look, or keep it very subtle */
+}
+
+/* Typography Overrides */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-main);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Common Utilities */
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+.gap-4 {
+  gap: 16px;
+}
