@@ -19,8 +19,73 @@ body {
     background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
 }
 
+/* Background Gradients */
 .landing-background {
-    display: none;
+    display: block;
+    /* Show it again */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.gradient-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    /* Soft blur */
+    opacity: 0.5;
+    /* Subtle opacity */
+    animation: float 20s infinite ease-in-out alternate;
+}
+
+/* 1. Top Right - Blue */
+.blob-1 {
+    top: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #bfdbfe 0%, rgba(191, 219, 254, 0) 70%);
+    animation-delay: 0s;
+}
+
+/* 2. Middle Left - Lighter Blue */
+.blob-2 {
+    top: 40%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #dbeafe 0%, rgba(219, 234, 254, 0) 70%);
+    animation-delay: -5s;
+}
+
+/* 3. Bottom Right/Center - Soft Blue */
+.blob-3 {
+    bottom: -10%;
+    right: 20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #e0f2fe 0%, rgba(224, 242, 254, 0) 70%);
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, 40px) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-30px, -20px) scale(1);
+    }
 }
 
 .landing-content {
