@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../services/api';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { USERS, APPOINTMENTS } from '../../data/mockData';
 import Card from '../../components/common/Card';
 import Badge from '../../components/common/Badge';
 import Button from '../../components/common/Button';
@@ -47,10 +46,11 @@ const DoctorSchedule = () => {
             }]);
             setIsModalOpen(false);
             setFormData({ patientId: '', date: '', time: '', type: 'In-Person' });
+            setFormData({ patientId: '', date: '', time: '', type: 'In-Person' });
             alert("Appointment Scheduled & Patient Notified!");
         } catch (err) {
             console.error(err);
-            alert("Failed to schedule");
+            alert(`Failed to schedule: ${err.response?.data?.error || err.message}`);
         }
     };
 
