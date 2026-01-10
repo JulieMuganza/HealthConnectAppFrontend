@@ -127,7 +127,11 @@ const DashboardLayout = ({ children, role = 'patient', user, disablePadding = fa
                                     {notifications.length > 0 ? notifications.map(notif => (
                                         <div
                                             key={notif.id}
-                                            onClick={() => { navigate('/notifications'); setNotificationsOpen(false); }}
+                                            onClick={() => {
+                                                const target = notif.type === 'MESSAGE' ? (role === 'doctor' ? '/doctor/messages' : '/patient/messages') : '/notifications';
+                                                navigate(target);
+                                                setNotificationsOpen(false);
+                                            }}
                                             style={{ display: 'flex', gap: '8px', alignItems: 'start', cursor: 'pointer', opacity: notif.isRead ? 0.6 : 1 }}
                                         >
                                             <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: notif.type === 'REMINDER' ? 'var(--warning-color)' : 'var(--primary-color)', marginTop: '6px', flexShrink: 0 }}></div>
