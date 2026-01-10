@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../services/api';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import WeeklyCalendar from '../../components/patient/WeeklyCalendar';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
@@ -30,17 +29,10 @@ const PatientAppointments = () => {
         <DashboardLayout role="patient">
             <div style={{ marginBottom: '32px' }}>
                 <h1 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '8px' }}>Appointments</h1>
-                <p style={{ color: 'var(--text-secondary)' }}>Manage your scheduled visits and history.</p>
+                <p style={{ color: 'var(--text-secondary)' }}>Manage your scheduled visits.</p>
             </div>
 
-            {/* Weekly Calendar View (Static for now, but could inject props) */}
-            <div style={{ marginBottom: '40px' }}>
-                {/* Note: In a full app, we'd pass appointments prop to WeeklyCalendar */}
-                <WeeklyCalendar />
-            </div>
-
-            <div style={{ marginTop: '48px' }}>
-                <h2 style={{ fontSize: '1.2rem', marginBottom: '24px' }}>All Appointments</h2>
+            <div style={{ marginTop: '24px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '16px' }}>
                     {appointments.length > 0 ? appointments.map(apt => (
                         <Card key={apt.id} className="p-6" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -59,7 +51,9 @@ const PatientAppointments = () => {
                             <Button variant="ghost" size="sm">View Details</Button>
                         </Card>
                     )) : (
-                        <p style={{ color: 'var(--text-secondary)' }}>No appointments found.</p>
+                        <Card className="p-6" style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
+                            <p>No appointments found.</p>
+                        </Card>
                     )}
                 </div>
             </div>
