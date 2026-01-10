@@ -1,13 +1,13 @@
 export const USERS = {
     patient: {
         id: 'p1',
-        name: 'Amanda Doe',
+        name: 'Amanda Smith',
         role: 'patient',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Amanda',
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AmandaSmith',
         email: 'amanda@example.com',
         phone: '+1 (555) 123-4567',
         dob: '1985-04-12',
-        emergencyContact: 'John Doe - Husband (+1 555-987-6543)',
+        emergencyContact: 'Michael Smith - Husband (+1 555-987-6543)',
         medicalHistory: [
             'Hypertension (diagnosed 2020)',
             'Type 2 Diabetes (managed)',

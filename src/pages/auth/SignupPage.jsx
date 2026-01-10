@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import { Envelope, Lock, User, IdentificationCard, Stethoscope } from '@phosphor-icons/react';
@@ -93,7 +93,7 @@ const SignupPage = () => {
                         <div className="flex-between gap-4">
                             <Input
                                 label="First Name"
-                                placeholder="John"
+                                placeholder="Michael"
                                 required
                                 name="firstName"
                                 value={formData.firstName}
@@ -101,7 +101,7 @@ const SignupPage = () => {
                             />
                             <Input
                                 label="Last Name"
-                                placeholder="Doe"
+                                placeholder="Smith"
                                 required
                                 name="lastName"
                                 value={formData.lastName}
@@ -148,7 +148,7 @@ const SignupPage = () => {
                     </form>
 
                     <div className="auth-footer-text">
-                        Already have an account? <a href="/login">Log in</a>
+                        Already have an account? <Link to="/login">Log in</Link>
                     </div>
                 </div>
             </div>

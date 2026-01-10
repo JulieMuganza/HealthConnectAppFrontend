@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import { Envelope, Lock, Stethoscope, User } from '@phosphor-icons/react';
@@ -115,7 +115,7 @@ const LoginPage = () => {
                     </form>
 
                     <div className="auth-footer-text">
-                        Don't have an account? <a href="/signup">Sign up</a>
+                        Don't have an account? <Link to="/signup">Sign up</Link>
                     </div>
                 </div>
             </div>

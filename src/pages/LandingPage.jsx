@@ -112,7 +112,7 @@ const LandingPage = () => {
 
                 {/* Footer */}
                 <footer className="landing-footer">
-                    <p>© 2025 HealthConnect. All rights reserved. Your health, our priority.</p>
+                    <p>© 2026 HealthConnect. All rights reserved. Your health, our priority.</p>
                 </footer>
             </div>
         </div>
