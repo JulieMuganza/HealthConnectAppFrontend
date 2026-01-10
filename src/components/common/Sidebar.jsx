@@ -15,7 +15,7 @@ import {
 } from '@phosphor-icons/react';
 import './Sidebar.css';
 
-const Sidebar = ({ role = 'patient', isOpen, onToggle }) => {
+const Sidebar = ({ role = 'patient', isOpen, onToggle, messageCount = 0, reminderCount = 0 }) => {
     const navigate = useNavigate();
     const [unreadCount, setUnreadCount] = useState(0);
 
@@ -34,19 +34,40 @@ const Sidebar = ({ role = 'patient', isOpen, onToggle }) => {
         return () => clearInterval(interval);
     }, []);
 
-    const menuItems = role === 'doctor' ? [
-        { icon: <SquaresFour weight="bold" />, label: 'Dashboard', path: '/doctor/dashboard' },
-        { icon: <Users weight="bold" />, label: 'Patients', path: '/doctor/patients' },
-        { icon: <Calendar weight="bold" />, label: 'Schedule', path: '/doctor/schedule' },
-        { icon: <ChatCircleDots weight="bold" />, label: 'Messages', path: '/doctor/messages' },
-        { icon: <Bell weight="bold" />, label: 'Notifications', path: '/notifications', badge: unreadCount },
-    ] : [
-        { icon: <SquaresFour weight="bold" />, label: 'Overview', path: '/patient/dashboard' },
-        { icon: <Calendar weight="bold" />, label: 'Appointments', path: '/patient/appointments' },
-        { icon: <Pill weight="bold" />, label: 'Medications', path: '/patient/medications' },
-        { icon: <ChatCircleDots weight="bold" />, label: 'Messages', path: '/patient/messages' },
-        { icon: <Bell weight="bold" />, label: 'Notifications', path: '/notifications', badge: unreadCount },
-    ];
+    // Dynamic menu items logic to inject badges/glows
+    const getMenuItems = (role) => {
+        const commonItems = [
+            { icon: <SquaresFour weight="bold" />, label: role === 'doctor' ? 'Dashboard' : 'Overview', path: role === 'doctor' ? '/doctor/dashboard' : '/patient/dashboard' },
+            {
+                icon: <ChatCircleDots weight="bold" />,
+                label: 'Messages',
+                path: role === 'doctor' ? '/doctor/messages' : '/patient/messages',
+                isMessage: true, // Marker for styling
+                count: messageCount
+            },
+            { icon: <Bell weight="bold" />, label: 'Notifications', path: '/notifications', badge: unreadCount }, // Keep total unread here or use reminderCount if preferred. User said "Sidebar Notifications... keep current display"
+        ];
+
+        if (role === 'doctor') {
+            return [
+                commonItems[0], // Dashboard
+                { icon: <Users weight="bold" />, label: 'Patients', path: '/doctor/patients' },
+                { icon: <Calendar weight="bold" />, label: 'Schedule', path: '/doctor/schedule' },
+                commonItems[1], // Messages
+                commonItems[2], // Notifications
+            ];
+        } else {
+            return [
+                commonItems[0], // Overview
+                { icon: <Calendar weight="bold" />, label: 'Appointments', path: '/patient/appointments' },
+                { icon: <Pill weight="bold" />, label: 'Medications', path: '/patient/medications' },
+                commonItems[1], // Messages
+                commonItems[2], // Notifications
+            ];
+        }
+    };
+
+    const menuItems = getMenuItems(role);
 
     return (
         <aside className={`sidebar-pro ${isOpen ? 'expanded' : 'collapsed'}`}>
@@ -65,11 +86,13 @@ const Sidebar = ({ role = 'patient', isOpen, onToggle }) => {
                     <NavLink
                         key={item.path}
                         to={item.path}
-                        className={({ isActive }) => `nav-item-pro ${isActive ? 'active' : ''}`}
+                        className={({ isActive }) => `nav-item-pro ${isActive ? 'active' : ''} ${item.isMessage && item.count > 0 ? 'green-glow' : ''}`}
                         style={{ position: 'relative' }}
                     >
                         <span className="nav-icon">{item.icon}</span>
                         {isOpen && <span className="nav-label">{item.label}</span>}
+
+                        {/* Red Badge for Notifications (Standard) */}
                         {item.badge > 0 && (
                             <span style={{
                                 position: 'absolute',
@@ -86,6 +109,13 @@ const Sidebar = ({ role = 'patient', isOpen, onToggle }) => {
                                 textAlign: 'center'
                             }}>
                                 {item.badge > 9 ? '9+' : item.badge}
+                            </span>
+                        )}
+
+                        {/* Green Badge for Messages (New Feature) */}
+                        {item.isMessage && item.count > 0 && isOpen && (
+                            <span className="message-badge">
+                                {item.count} New
                             </span>
                         )}
                     </NavLink>

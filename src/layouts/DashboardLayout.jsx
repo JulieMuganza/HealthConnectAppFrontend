@@ -11,6 +11,8 @@ const DashboardLayout = ({ children, role = 'patient', user, disablePadding = fa
     const [notificationsOpen, setNotificationsOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
+    const [messageCount, setMessageCount] = useState(0);
+    const [reminderCount, setReminderCount] = useState(0);
     const navigate = useNavigate();
 
     // Fetch Notifications
@@ -25,13 +27,15 @@ const DashboardLayout = ({ children, role = 'patient', user, disablePadding = fa
                     ]);
                     setNotifications(resList.data.slice(0, 5)); // Show recent 5
                     setUnreadCount(resCount.data.count);
+                    setMessageCount(resCount.data.messageCount);
+                    setReminderCount(resCount.data.reminderCount);
                 } catch (e) {
                     console.error(e);
                 }
             };
             fetchNotifs();
-            // Optional: Poll
-            const interval = setInterval(fetchNotifs, 30000);
+            // Poll every 5s
+            const interval = setInterval(fetchNotifs, 5000);
             return () => clearInterval(interval);
         });
     }, []);
@@ -59,6 +63,8 @@ const DashboardLayout = ({ children, role = 'patient', user, disablePadding = fa
                     role={role}
                     isOpen={sidebarOpen}
                     onToggle={() => setSidebarOpen(!sidebarOpen)}
+                    messageCount={messageCount || 0}
+                    reminderCount={reminderCount || 0}
                 />
                 {/* Mobile Overlay */}
                 {mobileMenuOpen && (
@@ -87,7 +93,17 @@ const DashboardLayout = ({ children, role = 'patient', user, disablePadding = fa
                             >
                                 <Bell size={20} weight="bold" />
                                 {unreadCount > 0 && (
-                                    <div style={{ position: 'absolute', top: '8px', right: '8px', width: '8px', height: '8px', background: 'var(--error-color)', borderRadius: '50%', border: '1px solid white' }}></div>
+                                    <div style={{
+                                        position: 'absolute', top: -4, right: -4,
+                                        minWidth: '18px', height: '18px',
+                                        background: 'var(--error-color)',
+                                        color: 'white', borderRadius: '10px',
+                                        fontSize: '0.7rem', fontWeight: 'bold',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        padding: '0 4px', border: '1px solid white'
+                                    }}>
+                                        {unreadCount > 9 ? '9+' : unreadCount}
+                                    </div>
                                 )}
                             </button>
                         </div>
