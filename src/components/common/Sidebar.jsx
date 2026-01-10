@@ -115,7 +115,7 @@ const Sidebar = ({ role = 'patient', isOpen, onToggle, messageCount = 0, reminde
                         {/* Green Badge for Messages (New Feature) */}
                         {item.isMessage && item.count > 0 && isOpen && (
                             <span className="message-badge">
-                                {item.count} New
+                                {item.count}
                             </span>
                         )}
                     </NavLink>

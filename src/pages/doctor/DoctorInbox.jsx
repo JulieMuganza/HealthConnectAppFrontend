@@ -121,9 +121,28 @@ const DoctorInbox = () => {
                                         <span className="chat-name">{chat.participant.name}</span>
                                         <span className="chat-time">{chat.time}</span>
                                     </div>
-                                    <div className="chat-preview">{chat.lastMessage}</div>
+                                    <div className="chat-preview" style={{ fontWeight: chat.unreadCount > 0 ? '700' : '400', color: chat.unreadCount > 0 ? 'var(--text-main)' : 'var(--text-secondary)' }}>
+                                        {chat.lastMessage}
+                                    </div>
                                 </div>
-                                {chat.unreadCount > 0 && <span className="unread-badge">{chat.unreadCount}</span>}
+                                {chat.unreadCount > 0 && (
+                                    <div style={{
+                                        background: 'var(--error-color)',
+                                        color: 'white',
+                                        minWidth: '20px',
+                                        height: '20px',
+                                        borderRadius: '10px',
+                                        fontSize: '0.75rem',
+                                        fontWeight: 'bold',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '0 6px',
+                                        marginLeft: '8px'
+                                    }}>
+                                        {chat.unreadCount}
+                                    </div>
+                                )}
                             </div>
                         )) : <p style={{ padding: '20px', color: 'var(--text-secondary)' }}>No conversations yet.</p>}
                     </div>
