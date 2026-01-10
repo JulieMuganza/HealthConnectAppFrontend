@@ -42,10 +42,9 @@ const DoctorSchedule = () => {
                 ...res.data,
                 // Optimistic UI updates
                 patientName: patients.find(p => p.id === parseInt(formData.patientId))?.name,
-                status: 'Scheduled'
+                status: 'CONFIRMED'
             }]);
             setIsModalOpen(false);
-            setFormData({ patientId: '', date: '', time: '', type: 'In-Person' });
             setFormData({ patientId: '', date: '', time: '', type: 'In-Person' });
             alert("Appointment Scheduled & Patient Notified!");
         } catch (err) {

@@ -52,7 +52,7 @@ const PatientAppointments = () => {
                                     <h4 style={{ fontWeight: 600, marginBottom: '4px' }}>Dr. {apt.doctorName} - {apt.type}</h4>
                                     <div style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Clock /> {apt.date} @ {apt.time}</span>
-                                        <Badge variant="neutral" size="sm" style={{ background: apt.status === 'Scheduled' ? '#EFF6FF' : '#F1F5F9', color: apt.status === 'Scheduled' ? 'var(--primary-color)' : 'inherit' }}>{apt.status}</Badge>
+                                        <Badge variant="neutral" size="sm" style={{ background: (apt.status === 'CONFIRMED' || apt.status === 'PENDING') ? '#EFF6FF' : '#F1F5F9', color: (apt.status === 'CONFIRMED' || apt.status === 'PENDING') ? 'var(--primary-color)' : 'inherit' }}>{apt.status}</Badge>
                                     </div>
                                 </div>
                             </div>
